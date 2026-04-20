@@ -1,0 +1,159 @@
+/* AlgoLog — index.css
+   Tailwind base + custom CSS design tokens + utility classes
+   Theme: Dark Terminal-Luxe
+   Fonts: 'DM Mono' (code/data), 'Syne' (headings), 'DM Sans' (body)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Syne:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg-base:       #0a0a0f;
+  --bg-surface:    #111118;
+  --bg-elevated:   #18181f;
+  --bg-input:      #0f0f16;
+
+  /* Borders */
+  --border:        rgba(255,255,255,0.07);
+  --border-focus:  rgba(245,158,11,0.5);  /* amber-500/50 */
+
+  /* Text */
+  --text-primary:   #f0f0f5;
+  --text-secondary: #a0a0b0;
+  --text-muted:     #5a5a70;
+
+  /* Accent */
+  --accent:        #f59e0b;   /* amber-500 */
+  --accent-dim:    rgba(245,158,11,0.15);
+  --accent-glow:   rgba(245,158,11,0.3);
+}
+
+/* ── Base Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Scrollbar — thin, themed */
+::-webkit-scrollbar               { width: 6px; height: 6px; }
+::-webkit-scrollbar-track         { background: var(--bg-base); }
+::-webkit-scrollbar-thumb         { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover   { background: rgba(245,158,11,0.4); }
+
+/* ── Component Utilities ─────────────────────────────────────── */
+@layer components {
+  /* Surface card / panel */
+  .panel {
+    @apply bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl p-4 sm:p-6;
+  }
+
+  .panel-title {
+    @apply text-xs uppercase tracking-widest text-[var(--text-muted)] font-medium;
+  }
+
+  /* KPI stat card */
+  .stat-card {
+    @apply panel relative overflow-hidden;
+    /* subtle grid texture */
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Tag chips */
+  .tag {
+    @apply inline-block px-1.5 py-0.5 text-[10px] rounded
+           bg-white/[0.05] text-[var(--text-secondary)]
+           border border-white/[0.08] font-mono;
+  }
+
+  .company-tag {
+    @apply inline-block px-1.5 py-0.5 text-[10px] rounded
+           bg-amber-500/10 text-amber-400/80
+           border border-amber-500/20 font-mono;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center gap-2
+           px-4 py-2 rounded-lg text-sm font-medium
+           bg-amber-500 text-black
+           hover:bg-amber-400 active:scale-95
+           transition-all duration-150 cursor-pointer;
+  }
+
+  /* Ghost / secondary button */
+  .btn-ghost {
+    @apply inline-flex items-center gap-2
+           px-4 py-2 rounded-lg text-sm font-medium
+           border border-[var(--border)] text-[var(--text-secondary)]
+           hover:border-amber-500/50 hover:text-amber-400
+           transition-all duration-150 cursor-pointer;
+  }
+
+  /* Small inputs / selects */
+  .input-sm {
+    @apply h-8 px-3 rounded-lg text-xs
+           bg-[var(--bg-input)] border border-[var(--border)]
+           text-[var(--text-primary)] placeholder:text-[var(--text-muted)]
+           focus:outline-none focus:border-[var(--border-focus)]
+           transition-colors duration-150;
+  }
+
+  /* Full inputs */
+  .input {
+    @apply w-full px-3 py-2 rounded-lg text-sm
+           bg-[var(--bg-input)] border border-[var(--border)]
+           text-[var(--text-primary)] placeholder:text-[var(--text-muted)]
+           focus:outline-none focus:border-[var(--border-focus)]
+           transition-colors duration-150;
+  }
+
+  /* Spinning loader */
+  .loader {
+    @apply w-8 h-8 rounded-full border-2 border-white/10 border-t-amber-500 animate-spin;
+  }
+
+  /* Dot pulsing indicator */
+  .pulse-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse;
+  }
+}
+
+/* ── Syntax Highlighter Overrides ────────────────────────────── */
+/* Ensure code blocks match our theme background */
+.code-block pre {
+  background: var(--bg-input) !important;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  margin: 0 !important;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+}
+
+/* ── Animations ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.3s ease forwards;
+}
